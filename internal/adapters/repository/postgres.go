@@ -36,3 +36,31 @@ func (m *MessengerPostgresRepository) ReadMessages() ([]*domain.Message, error) 
 	}
 	return messages, nil
 }
+
+// NewMessengerPostgresRepository function that creates a MessengerPostgresRepository,
+// creating a connection with postgres
+func NewMessengerPostgresRepository() *MessengerPostgresRepository {
+	host := "localhost"
+	port := "5432"
+	user := "postgres"
+	password := "Erickype"
+	dbname := "hexagonal_architecture"
+
+	conn := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=disable",
+		host,
+		port,
+		user,
+		dbname,
+		password,
+	)
+
+	db, err := gorm.Open("postgres", conn)
+	if err != nil {
+		panic(err)
+	}
+	db.AutoMigrate(&domain.Message{})
+
+	return &MessengerPostgresRepository{
+		db: db,
+	}
+}
