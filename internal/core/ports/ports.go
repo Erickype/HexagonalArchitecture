@@ -1,6 +1,6 @@
 package ports
 
-import "HexagonalArchitecture/internal/core/domain"
+import "github.com/Erickype/HexagonalArchitecture/internal/core/domain"
 
 type MessengerService interface {
 	SaveMessage(message domain.Message) error
