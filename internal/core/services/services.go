@@ -20,5 +20,10 @@ func (m *MessengerService) ReadMessage(id string) (*domain.Message, error) {
 }
 
 func (m *MessengerService) ReadMessages() ([]*domain.Message, error) {
-	return m.ReadMessages()
+	return m.repository.ReadMessages()
+}
+
+// NewMessengerService creates and returns a new instance of MessengerService by passing a repository of type ports.MessengerRepository
+func NewMessengerService(repository ports.MessengerRepository) *MessengerService {
+	return &MessengerService{repository: repository}
 }
