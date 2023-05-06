@@ -49,3 +49,14 @@ func (m *MessengerRedisRepository) ReadMessages() ([]*domain.Message, error) {
 	}
 	return messages, nil
 }
+
+func NewMessengerRedisRepository(host string) *MessengerRedisRepository {
+	client := redis.NewClient(&redis.Options{
+		Addr:     host,
+		Password: "",
+		DB:       0,
+	})
+	return &MessengerRedisRepository{
+		client: client,
+	}
+}
