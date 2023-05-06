@@ -18,3 +18,16 @@ func (m *MessengerRedisRepository) SaveMessage(message domain.Message) error {
 	m.client.HSet("messages", message.Id, data)
 	return nil
 }
+
+func (m *MessengerRedisRepository) ReadMessage(id string) (*domain.Message, error) {
+	value, err := m.client.HGet("messages", id).Result()
+	if err != nil {
+		return nil, err
+	}
+	message := &domain.Message{}
+	err = json.Unmarshal([]byte(value), message)
+	if err != nil {
+		return nil, err
+	}
+	return message, nil
+}
