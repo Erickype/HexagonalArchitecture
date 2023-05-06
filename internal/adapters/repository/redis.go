@@ -31,3 +31,21 @@ func (m *MessengerRedisRepository) ReadMessage(id string) (*domain.Message, erro
 	}
 	return message, nil
 }
+
+func (m *MessengerRedisRepository) ReadMessages() ([]*domain.Message, error) {
+	var messages []*domain.Message
+	values, err := m.client.HGetAll("messages").Result()
+	if err != nil {
+		return nil, err
+	}
+
+	for _, value := range values {
+		message := &domain.Message{}
+		err = json.Unmarshal([]byte(value), message)
+		if err != nil {
+			return nil, err
+		}
+		messages = append(messages, message)
+	}
+	return messages, nil
+}
