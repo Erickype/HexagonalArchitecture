@@ -44,6 +44,17 @@ func (h *HttpHandler) ReadMessage(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, message)
 }
 
+func (h *HttpHandler) ReadMessages(ctx *gin.Context) {
+	messages, err := h.service.ReadMessages()
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+	ctx.JSON(http.StatusOK, messages)
+}
+
 func NewHttpHandler(service services.MessengerService) *HttpHandler {
 	return &HttpHandler{
 		service: service,
