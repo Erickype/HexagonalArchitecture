@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/Erickype/HexagonalArchitecture/internal/core/domain"
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
 type MessengerPostgresRepository struct {
@@ -12,7 +13,7 @@ type MessengerPostgresRepository struct {
 }
 
 func (m *MessengerPostgresRepository) SaveMessage(message domain.Message) error {
-	request := m.db.Create(message)
+	request := m.db.Create(&message)
 	if request.RowsAffected == 0 {
 		return errors.New(fmt.Sprintf("message not saved: %t", request.Error))
 	}
