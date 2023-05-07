@@ -53,7 +53,8 @@ func (m *MessengerRedisRepository) ReadMessages() ([]*domain.Message, error) {
 func NewMessengerRedisRepository(host string) *MessengerRedisRepository {
 	client := redis.NewClient(&redis.Options{
 		Addr:     host,
-		Password: "",
+		Password: "QTM2ZnbEufq7tCAEFJqMwdFRVuvwqGKn",
+		Username: "default",
 		DB:       0,
 	})
 	return &MessengerRedisRepository{
